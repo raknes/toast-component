@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   AlertOctagon,
   AlertTriangle,
@@ -18,16 +17,20 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast() {
+function Toast({ variant = 'notice', message = '', isOpen, handleDismiss}) {
+  const Icon = ICONS_BY_VARIANT[variant];
+
+  if (!isOpen) return null;
+
   return (
-    <div className={`${styles.toast} ${styles.notice}`}>
+    <div className={`${styles.toast} ${styles[variant]}`}>
       <div className={styles.iconContainer}>
-        <Info size={24} />
+        <Icon size={24} />
       </div>
       <p className={styles.content}>
-        16 photos have been uploaded
+        {message}
       </p>
-      <button className={styles.closeButton}>
+      <button className={styles.closeButton} onClick={handleDismiss}>
         <X size={24} />
         <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
