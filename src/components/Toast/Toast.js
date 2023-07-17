@@ -23,6 +23,7 @@ function Toast({ variant = 'notice', id, children}) {
   const { removeToast } = React.useContext(ToastContext);
   const Icon = ICONS_BY_VARIANT[variant];
   console.log({variant, children});
+  
   return (
     <div className={`${styles.toast} ${styles[variant]}`}>
       <div className={styles.iconContainer}>
