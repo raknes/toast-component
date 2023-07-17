@@ -6,8 +6,10 @@ import {
   X,
 } from 'react-feather';
 
+import React from 'react';
 import VisuallyHidden from '../VisuallyHidden';
 
+import { ToastContext } from '../ToastPlayground/ToastProvider';
 import styles from './Toast.module.css';
 
 const ICONS_BY_VARIANT = {
@@ -17,20 +19,19 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast({ variant = 'notice', message = '', isOpen, handleDismiss}) {
+function Toast({ variant = 'notice', id, children}) {
+  const { removeToast } = React.useContext(ToastContext);
   const Icon = ICONS_BY_VARIANT[variant];
-
-  if (!isOpen) return null;
-
+  console.log({variant, children});
   return (
     <div className={`${styles.toast} ${styles[variant]}`}>
       <div className={styles.iconContainer}>
         <Icon size={24} />
       </div>
       <p className={styles.content}>
-        {message}
+        {children}
       </p>
-      <button className={styles.closeButton} onClick={handleDismiss}>
+      <button className={styles.closeButton} onClick={() => removeToast(id)}>
         <X size={24} />
         <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
@@ -38,4 +39,4 @@ function Toast({ variant = 'notice', message = '', isOpen, handleDismiss}) {
   );
 }
 
-export default Toast;
+export default React.memo(Toast);
